@@ -7,18 +7,25 @@
 
 
 * 목차
-  1. [교수](#pro)
+  1. [교수계정](#pro)
      1. [과제게시판 관리](#pro_as1)
      2. [과제 제출현황](#pro_as2)
-  2. [학생](#stu)
+  2. [학생계정](#stu)
 
 -----------------------
 
+처음 메인으로 담당한 과제게시판입니다. NaLab의 필수기능중 하나였고 Lab은 팀 단위로 운영되는 과목이기때문에 팀별로 과제를 제출하는 기능이 필요했습니다.  팀별제출 및 개인제출, 제출기한설정, 제출현황보기 등 여러 기능들을 개발한 내용입니다.
+
 </br>
 
-<div id="pro">●  교수</div></br>
+<h4>
+    <div id="pro">●  교수계정</div>
+</h4>
 
-<div id="pro_as1">1. 과제게시판 관리</div></br>
+<h5>
+    <div id="pro_as1">1. 과제게시판 관리</div>
+</h5>
+
 
 교수계정으로 과제를 생성하고 세부적인 설정이 가능합니다.
 
@@ -30,52 +37,52 @@
 
 ```java
 @Override
-    public void insertBoard(Map<String, Object> map, HttpServletRequest req) throws Exception {
+public void insertBoard(Map<String, Object> map, HttpServletRequest req) throws Exception {
 
-        String lab_code = (String)map.get("lab_code");
-        String board_code = UUID.randomUUID().toString();
+    String lab_code = (String)map.get("lab_code");
+    String board_code = UUID.randomUUID().toString();
 
-        map.put("lab_code",lab_code );
-        map.put("board_code",board_code );
+    map.put("lab_code",lab_code );
+    map.put("board_code",board_code );
 
-        List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, req);
-        if(list.isEmpty() == false){
-            for(int i=0, size=list.size(); i<size; i++){
-                labDAO.insertFile(list.get(i));
-            }
-            String file_id = list.get(0).get("file_id").toString();
-
-            map.put("file_id",file_id);
-        } else {
-            map.put("file_id",null);
+    List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, req);
+    if(list.isEmpty() == false){
+        for(int i=0, size=list.size(); i<size; i++){
+            labDAO.insertFile(list.get(i));
         }
+        String file_id = list.get(0).get("file_id").toString();
 
-        if(map.containsKey("end_day")){
-            String end = (String)map.get("end_day");
-            String start = (String)map.get("start_day");
-
-            String start_hour = (String)map.get("start_hour");
-            String end_hour = (String)map.get("end_hour");
-
-            String start_minute = (String)map.get("start_minute");
-            String end_minute = (String)map.get("end_minute");
-
-            if( start_hour.equals("00")) {
-                map.put("start",start+" 00:00:00");
-            } else {
-                map.put("start", start + " " + start_hour + ":" +  start_minute + ":00");
-            }
-
-            if( end_hour.equals("00") ) {
-                map.put("end",end+" 23:59:59");
-            } else {
-                map.put("end", end + " " + end_hour + ":" + end_minute + ":00");
-            }
-            labDAO.insert_assignment(map);
-        }
-
-        labDAO.insertBoard(map);
+        map.put("file_id",file_id);
+    } else {
+        map.put("file_id",null);
     }
+
+    if(map.containsKey("end_day")){
+        String end = (String)map.get("end_day");
+        String start = (String)map.get("start_day");
+
+        String start_hour = (String)map.get("start_hour");
+        String end_hour = (String)map.get("end_hour");
+
+        String start_minute = (String)map.get("start_minute");
+        String end_minute = (String)map.get("end_minute");
+
+        if( start_hour.equals("00")) {
+            map.put("start",start+" 00:00:00");
+        } else {
+            map.put("start", start + " " + start_hour + ":" +  start_minute + ":00");
+        }
+
+        if( end_hour.equals("00") ) {
+            map.put("end",end+" 23:59:59");
+        } else {
+            map.put("end", end + " " + end_hour + ":" + end_minute + ":00");
+        }
+        labDAO.insert_assignment(map);
+    }
+
+    labDAO.insertBoard(map);
+}
 ```
 
 `fileUtils.parseInsertFileInfo` : fileutil 파일에서 parseInsertFileInfo부분을 이용하여 파일을 업로드시켜줍니다. 업로드하기전 파일의 고유 id를 지정해주고 `map`에 넣어 전달해줍니다. 
@@ -90,32 +97,32 @@
 
 
 
-![image](https://user-images.githubusercontent.com/78251137/106372417-bc55cc00-63b2-11eb-85d9-1b7d23f79239.png)
+<img src="https://user-images.githubusercontent.com/78251137/106372417-bc55cc00-63b2-11eb-85d9-1b7d23f79239.png" alt="image"  />
 
 
 
 ```jsp
 <div class="card shadow mb-4">
-	<c:if test = "${submit_info.file_id == null && assignment.today > assignment.end}">
-		<button class="btn btn-danger btn-lg btn-block" type="button">
-                                                마감되었습니다.
-		</button>
-	</c:if>
-	<c:if test = "${submit_info.file_id != null && assignment.today > assignment.end}">
-		<button class="btn btn-danger btn-lg btn-block" type="button">
-                                                마감되었습니다.(마감 이후 수정 불가)
-		</button>
-	</c:if>
-	<c:if test = "${submit_info.file_id != null && assignment.today < assignment.end && submit_info.score != null}">
-		<button class="btn btn-danger btn-lg btn-block" type="button">
-                                                마감되었습니다. <small>(교수가 해당 과제에 대한 평가를 완료했습니다.)</small>
-		</button>
-	</c:if>
-	<c:if test="${assignment.today < assignment.start}">
-		<button class="btn btn-warning btn-lg btn-block" type="button">
-                                                제출 기한이 아닙니다. <small>(${assignment.start} 이후 부터 제출 가능)</small>
-		</button>
-	</c:if>
+    <c:if test = "${submit_info.file_id == null && assignment.today > assignment.end}">
+        <button class="btn btn-danger btn-lg btn-block" type="button">
+            마감되었습니다.
+        </button>
+    </c:if>
+    <c:if test = "${submit_info.file_id != null && assignment.today > assignment.end}">
+        <button class="btn btn-danger btn-lg btn-block" type="button">
+            마감되었습니다.(마감 이후 수정 불가)
+        </button>
+    </c:if>
+    <c:if test = "${submit_info.file_id != null && assignment.today < assignment.end && submit_info.score != null}">
+        <button class="btn btn-danger btn-lg btn-block" type="button">
+            마감되었습니다. <small>(교수가 해당 과제에 대한 평가를 완료했습니다.)</small>
+        </button>
+    </c:if>
+    <c:if test="${assignment.today < assignment.start}">
+        <button class="btn btn-warning btn-lg btn-block" type="button">
+            제출 기한이 아닙니다. <small>(${assignment.start} 이후 부터 제출 가능)</small>
+        </button>
+    </c:if>
 </div>
 ```
 
@@ -133,43 +140,43 @@
 
 ```java
 @RequestMapping(value="/LabBoardDetail.do")
-    public ModelAndView labboarddetail(CommandMap commandMap, HttpServletRequest request) throws Exception { //board_num
-        ModelAndView mv = new ModelAndView("/lab/LabBoardDetail");
-        HttpSession session = request.getSession();
-        Map<String,Object> map2 = (Map<String,Object>)session.getAttribute("user_info");
+public ModelAndView labboarddetail(CommandMap commandMap, HttpServletRequest request) throws Exception { //board_num
+    ModelAndView mv = new ModelAndView("/lab/LabBoardDetail");
+    HttpSession session = request.getSession();
+    Map<String,Object> map2 = (Map<String,Object>)session.getAttribute("user_info");
 
-        if(commandMap.getMap().containsKey("room")) { //메인페이지에서 과제 열람 시, session을 Lab모임방이나 캡스톤모임방으로 변경
-            map2.put("room_type", ((String)commandMap.getMap().get("room")).charAt(1));
-            labService.setLab_code(map2, request);
-            map2 = (Map<String,Object>)session.getAttribute("user_info");
+    if(commandMap.getMap().containsKey("room")) { //메인페이지에서 과제 열람 시, session을 Lab모임방이나 캡스톤모임방으로 변경
+        map2.put("room_type", ((String)commandMap.getMap().get("room")).charAt(1));
+        labService.setLab_code(map2, request);
+        map2 = (Map<String,Object>)session.getAttribute("user_info");
+    }
+
+    Map<String,Object> map = labService.selectBoardDetail(commandMap.getMap());
+
+    mv.addObject("Detail" , map.get("map"));
+    mv.addObject("comment", labService.commentList((Map)map.get("map")));
+    mv.addObject("file_info", map.get("file_info"));
+    mv.addObject("assignment", map.get("assignment"));
+
+    mv.addObject("money_total",labService.total_money(map2));
+    mv.addObject("steams", labService.steams(map2));
+    mv.addObject("selectlabboard", labService.selectlabboard(map2));
+    mv.addObject("selectteamboard", labService.selectteamboard(map2));
+    mv.addObject("selectcommonteamboard", labService.selectcommonteamboard(map2));
+
+    map2.put("board_num", request.getParameter("board_num"));
+    map2.put("flag", ((HashMap)map.get("assignment")).get("team_flag"));
+    mv.addObject("as_status", labService.assignment_status(map2));
+    mv.addObject("as_team_status", labService.assignment_team_status(map2));
+    if(map2.get("auth")!=null && map2.get("auth").equals(1)) {
+        if(((Map)map.get("assignment")).get("team_flag")!=null&&((Map)map.get("assignment")).get("team_flag").equals("on")) {
+            mv.addObject("team_submit_info", labService.assignment_team_status_ck(map2));
+        } else {
+            mv.addObject("submit_info", labService.assignment_status_ck(map2));
         }
+    }
 
-        Map<String,Object> map = labService.selectBoardDetail(commandMap.getMap());
-
-        mv.addObject("Detail" , map.get("map"));
-        mv.addObject("comment", labService.commentList((Map)map.get("map")));
-        mv.addObject("file_info", map.get("file_info"));
-        mv.addObject("assignment", map.get("assignment"));
-
-        mv.addObject("money_total",labService.total_money(map2));
-        mv.addObject("steams", labService.steams(map2));
-        mv.addObject("selectlabboard", labService.selectlabboard(map2));
-        mv.addObject("selectteamboard", labService.selectteamboard(map2));
-        mv.addObject("selectcommonteamboard", labService.selectcommonteamboard(map2));
-
-        map2.put("board_num", request.getParameter("board_num"));
-        map2.put("flag", ((HashMap)map.get("assignment")).get("team_flag"));
-        mv.addObject("as_status", labService.assignment_status(map2));
-        mv.addObject("as_team_status", labService.assignment_team_status(map2));
-        if(map2.get("auth")!=null && map2.get("auth").equals(1)) {
-            if(((Map)map.get("assignment")).get("team_flag")!=null&&((Map)map.get("assignment")).get("team_flag").equals("on")) {
-                mv.addObject("team_submit_info", labService.assignment_team_status_ck(map2));
-            } else {
-                mv.addObject("submit_info", labService.assignment_status_ck(map2));
-            }
-     }
-
-     return mv;
+    return mv;
 }
 ```
 
@@ -185,7 +192,9 @@
 
 </br>
 
-<div id="pro_as2">2. 과제 제출현황</div></br>
+<h5>
+    <div id="pro_as2">2. 과제 제출현황</div>
+</h5>
 
 소속된 Lab의 모든 과제를 한 페이지에서 볼 수 있도록 현황페이지를 제작했습니다. 해당 페이지는 교수만 확인이 가능합니다. 각 과제의 번호를 클릭하면 해당하는 과제의 게시글로 이동할 수 있고 과제가 늘어나면 스크롤로 표시되어 페이지의 가시성을 향상시켰습니다.
 
@@ -257,11 +266,13 @@
 
 </br>
 
-점수는 과제 상세페이지에서 부여할 수 있습니다. 아래의 제출현황을 보면 `상세보기`버튼이 보이게되는데 이를 클릭하면 점수를 부여할 수 있는 모달창을 출력해줍니다.
-
 ![image](https://user-images.githubusercontent.com/78251137/106372613-b2cd6380-63b4-11eb-92c5-1f3dc2a71215.png)
 
+</br>
 
+점수는 과제 상세페이지에서 부여할 수 있습니다. 제출현황을 보면 `상세보기`버튼이 보이게되는데 이를 클릭하면 점수를 부여할 수 있는 모달창을 출력해줍니다.
+
+</br>
 
  ![image](https://user-images.githubusercontent.com/78251137/106372636-edcf9700-63b4-11eb-9eb5-0099da52622e.png)
 
@@ -294,4 +305,49 @@
 점수를 입력하기전 `team_flag` 값을 먼저 확인합니다. `team_flag`가 `on`이라면 개인이 아닌 팀에 점수를 부여해주어야하므로 `map.remove("id")` 를 입력하여 `map`에서 id값을 지워줍니다. 이후 for문을 이용하여 맴버의 숫자만큼 반복해 팀 구성원 모두에게 같은 점수를 부여해줍니다.
 
 반대로 `team_flag`가 `on`이 아니라면 팀 점수가 아닌 개인의 점수이므로 별다른 과정없이 `map`에 있는 값 그대로 쿼리를 실행시켜주면 됩니다.
+
+</br>
+
+</br>
+
+![image](https://user-images.githubusercontent.com/78251137/106394515-544dc700-6440-11eb-9d7d-defa30873a20.png)
+
+</br>
+
+과제게시판목록을 보면 제목옆에 현재 제출자수가 나타나게됩니다. 
+
+</br>
+
+```sql
+	<select id="boardlist" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+               bl.*, a.submit_state, a.end, u.name
+            FROM
+               board_list bl
+            LEFT JOIN
+               assignment_info a
+            ON
+               bl.board_code = a.board_code
+            JOIN
+                user_info u
+            ON
+                bl.id = u.id
+            WHERE
+               bl.lab_code = #{lab_code}
+            AND
+               bl.d_code = 0
+            GROUP BY
+               bl.board_num
+            ORDER BY
+               bl.board_num desc;
+        ]]>
+    </select>
+```
+
+학생이 과제를 제출하게되면 `submit_state` 값이 한개씩 증가합니다. 이미 제출한사람이 수정할 경우에는 해당되지 않습니다. 
+
+----------
+
+
 

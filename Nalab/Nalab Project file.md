@@ -15,7 +15,9 @@
 
 
 
-<div id="up">●  파일업로드</div>
+<h2>
+    <div id="up">●  파일업로드</div>
+</h2>
 
 Na-Lab 페이지에서 이용할 게시판에 파일을 업로드하는 기능을 추가하였습니다.
 
@@ -128,7 +130,9 @@ public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, Http
 
 
 
-<div id="mod">● 파일수정 및 삭제</div>
+<h2>
+    <div id="mod">● 파일수정 및 삭제</div>
+</h2>
 
 ![image](https://user-images.githubusercontent.com/78251137/106371569-4a2cb980-63a9-11eb-90be-3681908d8dba.png)
 
@@ -188,7 +192,9 @@ p태그로 감싸진부분은 javascript를 통해 파일추가버튼을 클릭�
 
 
 
-<div id="down">● 파일다운로드</div>
+<h2>
+    <div id="down">● 파일다운로드</div>
+</h2>
 
 ```jsp
 <tr>

@@ -14,7 +14,9 @@
 
 </br>
 
-<div id="cal">●  Calendar 초안</div></br>
+<h2>
+    <div id="cal">●  Calendar 초안</div></br>
+</h2>
 
 NaLab 메인페이지 아래쪽에 Lab의 공통일정이나 각각의 Lab일정을 보기쉽게 정리해보고자 달력을 이용하여 일정관리기능을 개발하였습니다.
 
@@ -28,7 +30,9 @@ NaLab 메인페이지 아래쪽에 Lab의 공통일정이나 각각의 Lab일정
 
 
 
-<div id="mana">●  일정관리</div></br>
+<h2>
+    <div id="mana">●  일정관리</div></br>
+</h2>
 
 Calendar의 오른쪽위 `일정관리` 버튼을 클릭하면 아래의 모달로 이동하게됩니다.
 

@@ -18,7 +18,9 @@
 
 
 
-####  <div id="500-server-error">●  500 server error</div>
+<h2>
+    <div id="500-server-error">●  500 server error</div>
+</h2>
 
 1. 원인분석
 
@@ -106,7 +108,9 @@
 
    
 
-#### <div id="Improving">●  성능향상</div>
+<h2>
+    <div id="Improving">●  성능향상</div>
+</h2>
 
 아래 사진은 Schoolware에 존재하는 졸업사정회 학생조회 기능입니다.
 

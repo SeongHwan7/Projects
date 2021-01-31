@@ -128,7 +128,7 @@ public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, Http
 
 
 
-<div id="down">● 파일수정 및 삭제</div>
+<div id="mod">● 파일수정 및 삭제</div>
 
 ![image](https://user-images.githubusercontent.com/78251137/106371569-4a2cb980-63a9-11eb-90be-3681908d8dba.png)
 

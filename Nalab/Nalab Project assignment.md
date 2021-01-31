@@ -86,7 +86,7 @@
 
 `마감이후 제출 허용`은 체크할경우 마감날짜 이후에도 계속하여 과제를 제출가능한 상태입니다.  단, 마감이후에 제출한 학생은 제출현황에서 별도의 표시로 체크됩니다.
 
-![image](https://user-images.githubusercontent.com/78251137/106372409-a6480b80-63b2-11eb-8fdc-1550f0cdb773.png)
+<img src="https://user-images.githubusercontent.com/78251137/106372409-a6480b80-63b2-11eb-8fdc-1550f0cdb773.png" alt="image" style="zoom: 80%;" />
 
 
 

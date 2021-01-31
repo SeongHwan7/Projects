@@ -10,7 +10,6 @@
   1. [교수계정](#pro)
      1. [과제게시판 관리](#pro_as1)
      2. [과제 제출현황](#pro_as2)
-  2. [학생계정](#stu)
 
 -----------------------
 
@@ -18,18 +17,19 @@
 
 </br>
 
-<h4>
+<h2>
     <div id="pro">●  교수계정</div>
-</h4>
+</h2>
 
-<h5>
+<h3>
     <div id="pro_as1">1. 과제게시판 관리</div>
-</h5>
+</h3>
+
 
 
 교수계정으로 과제를 생성하고 세부적인 설정이 가능합니다.
 
- <img src="https://user-images.githubusercontent.com/78251137/106372255-4735c700-63b1-11eb-8e3b-cfcdc5a29439.png" alt="image" style="zoom:80%;" />
+ <img src="https://user-images.githubusercontent.com/78251137/106372255-4735c700-63b1-11eb-8e3b-cfcdc5a29439.png" alt="image" style="zoom: 50%;" />
 
 
 
@@ -93,11 +93,11 @@ public void insertBoard(Map<String, Object> map, HttpServletRequest req) throws 
 
 `마감이후 제출 허용`은 체크할경우 마감날짜 이후에도 계속하여 과제를 제출가능한 상태입니다.  단, 마감이후에 제출한 학생은 제출현황에서 별도의 표시로 체크됩니다.
 
-<img src="https://user-images.githubusercontent.com/78251137/106372409-a6480b80-63b2-11eb-8fdc-1550f0cdb773.png" alt="image" style="zoom: 80%;" />
+ <img src="https://user-images.githubusercontent.com/78251137/106372409-a6480b80-63b2-11eb-8fdc-1550f0cdb773.png" alt="image" style="zoom: 67%;" />
 
 
 
-<img src="https://user-images.githubusercontent.com/78251137/106372417-bc55cc00-63b2-11eb-85d9-1b7d23f79239.png" alt="image"  />
+<img src="https://user-images.githubusercontent.com/78251137/106372417-bc55cc00-63b2-11eb-85d9-1b7d23f79239.png" alt="image" style="zoom:;" />
 
 
 
@@ -192,9 +192,10 @@ public ModelAndView labboarddetail(CommandMap commandMap, HttpServletRequest req
 
 </br>
 
-<h5>
+<h3>
     <div id="pro_as2">2. 과제 제출현황</div>
-</h5>
+</h3>
+
 
 소속된 Lab의 모든 과제를 한 페이지에서 볼 수 있도록 현황페이지를 제작했습니다. 해당 페이지는 교수만 확인이 가능합니다. 각 과제의 번호를 클릭하면 해당하는 과제의 게시글로 이동할 수 있고 과제가 늘어나면 스크롤로 표시되어 페이지의 가시성을 향상시켰습니다.
 
